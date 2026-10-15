@@ -1,0 +1,188 @@
+{
+  "info": {
+    "name": "TP Tecnologías Web - Competiciones y Autos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Competiciones",
+      "item": [
+        {
+          "name": "Listar Competiciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/competiciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones"]
+            }
+          }
+        },
+        {
+          "name": "Filtrar Competiciones por Nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/competiciones?nombre=F1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones"],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "F1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Competición por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/competiciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear Competición",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Gran Premio de Mónaco\",\n  \"premio\": \"Trofeo Príncipe\",\n  \"fecha\": \"2026-05-25\",\n  \"lugar\": \"Circuito de Mónaco\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/competiciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Competición",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/competiciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autos",
+      "item": [
+        {
+          "name": "Listar Autos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/autos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos"]
+            }
+          }
+        },
+        {
+          "name": "Filtrar Autos por Piloto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/autos?piloto=Colapinto",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos"],
+              "query": [
+                {
+                  "key": "piloto",
+                  "value": "Colapinto"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Auto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/autos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Crear Auto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelo\": \"FW46\",\n  \"marca\": \"Williams\",\n  \"numero\": 43,\n  \"potencia\": 950,\n  \"piloto\": \"Franco Colapinto\",\n  \"categoria\": \"F1\",\n  \"competicionId\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/autos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Auto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/autos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

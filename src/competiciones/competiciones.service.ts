@@ -1,47 +1,46 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, Like } from 'typeorm';
+import { Competicion } from '../entities/competicion.entity';
 import { CreateCompeticionDto } from './dto/create-competicion.dto';
-
-export interface Competicion {
-  id: number;
-  nombre: string;
-  premio: string;
-  fecha: string;
-  lugar: string;
-}
 
 @Injectable()
 export class CompeticionesService {
-  private competiciones: Competicion[] = [
-    { id: 1, nombre: 'Gran Premio F1', premio: 'Copa de Oro', fecha: '2026-10-15', lugar: 'Autódromo Juan y Oscar Gálvez' },
-  ];
-  private idCounter = 2;
+  constructor(
+    @InjectRepository(Competicion)
+    private competicionesRepository: Repository<Competicion>,
+  ) {}
 
-  findAll(): Competicion[] {
-    return this.competiciones;
+  async findAll(nombre?: string): Promise<Competicion[]> {
+    if (nombre) {
+      return this.competicionesRepository.find({
+        where: { nombre: Like(`%${nombre}%`) },
+        relations: { autos: true },
+      });
+    }
+    return this.competicionesRepository.find({ relations: { autos: true } });
   }
 
-  findOne(id: number): Competicion {
-    const competicion = this.competiciones.find((c) => c.id === id);
+  async findOne(id: number): Promise<Competicion> {
+    const competicion = await this.competicionesRepository.findOne({
+      where: { id },
+      relations: { autos: true },
+    });
     if (!competicion) {
       throw new NotFoundException(`Competición con ID ${id} no encontrada`);
     }
     return competicion;
   }
 
-  create(createDto: CreateCompeticionDto): Competicion {
-    const nuevaCompeticion: Competicion = {
-      id: this.idCounter++,
-      ...createDto,
-    };
-    this.competiciones.push(nuevaCompeticion);
-    return nuevaCompeticion;
+  async create(createDto: CreateCompeticionDto): Promise<Competicion> {
+    const competicion = this.competicionesRepository.create(createDto);
+    return this.competicionesRepository.save(competicion);
   }
 
-  remove(id: number): void {
-    const index = this.competiciones.findIndex((c) => c.id === id);
-    if (index === -1) {
+  async remove(id: number): Promise<void> {
+    const result = await this.competicionesRepository.delete(id);
+    if (result.affected === 0) {
       throw new NotFoundException(`Competición con ID ${id} no encontrada`);
     }
-    this.competiciones.splice(index, 1);
   }
 }

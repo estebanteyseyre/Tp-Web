@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { Competicion } from './entities/competicion.entity';
 import { Auto } from './entities/auto.entity';
 import { CompeticionesModule } from './competiciones/competiciones.module';
+import { AutosModule } from './autos/autos.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -29,6 +30,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       synchronize: true,
     }),
     CompeticionesModule,
+    AutosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
