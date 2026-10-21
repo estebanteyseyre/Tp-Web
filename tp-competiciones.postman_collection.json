@@ -79,6 +79,29 @@
           }
         },
         {
+          "name": "Editar Competición",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"premio\": \"Super Trofeo Actualizado\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/competiciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["competiciones", "1"]
+            }
+          }
+        },
+        {
           "name": "Eliminar Competición",
           "request": {
             "method": "DELETE",
@@ -165,6 +188,29 @@
               "host": ["localhost"],
               "port": "3000",
               "path": ["autos"]
+            }
+          }
+        },
+        {
+          "name": "Editar Auto",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"potencia\": 980\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/autos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["autos", "1"]
             }
           }
         },

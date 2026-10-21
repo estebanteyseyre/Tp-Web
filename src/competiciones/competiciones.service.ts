@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { Competicion } from '../entities/competicion.entity';
 import { CreateCompeticionDto } from './dto/create-competicion.dto';
+import { UpdateCompeticionDto } from './dto/update-competicion.dto';
 
 @Injectable()
 export class CompeticionesService {
@@ -35,6 +36,12 @@ export class CompeticionesService {
   async create(createDto: CreateCompeticionDto): Promise<Competicion> {
     const competicion = this.competicionesRepository.create(createDto);
     return this.competicionesRepository.save(competicion);
+  }
+
+  async update(id: number, updateDto: UpdateCompeticionDto): Promise<Competicion> {
+    await this.findOne(id); // Lanza NotFoundException si no existe
+    await this.competicionesRepository.update(id, updateDto);
+    return this.findOne(id);
   }
 
   async remove(id: number): Promise<void> {

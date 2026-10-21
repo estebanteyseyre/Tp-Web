@@ -4,6 +4,7 @@ import { Repository, Like } from 'typeorm';
 import { Auto } from '../entities/auto.entity';
 import { Competicion } from '../entities/competicion.entity';
 import { CreateAutoDto } from './dto/create-auto.dto';
+import { UpdateAutoDto } from './dto/update-auto.dto';
 
 @Injectable()
 export class AutosService {
@@ -47,6 +48,23 @@ export class AutosService {
       ...createDto,
       competicion,
     });
+    return this.autosRepository.save(auto);
+  }
+
+  async update(id: number, updateDto: UpdateAutoDto): Promise<Auto> {
+    const auto = await this.findOne(id);
+
+    if (updateDto.competicionId) {
+      const competicion = await this.competicionesRepository.findOneBy({
+        id: updateDto.competicionId,
+      });
+      if (!competicion) {
+        throw new BadRequestException(`Competición con ID ${updateDto.competicionId} no encontrada`);
+      }
+      auto.competicion = competicion;
+    }
+
+    Object.assign(auto, updateDto);
     return this.autosRepository.save(auto);
   }
 

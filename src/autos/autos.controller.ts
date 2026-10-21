@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Delete, Body, Param, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, ParseIntPipe } from '@nestjs/common';
 import { AutosService } from './autos.service';
 import type { Auto } from '../entities/auto.entity';
 import { CreateAutoDto } from './dto/create-auto.dto';
+import { UpdateAutoDto } from './dto/update-auto.dto';
 
 @Controller('autos')
 export class AutosController {
@@ -20,6 +21,14 @@ export class AutosController {
   @Post()
   create(@Body() createDto: CreateAutoDto): Promise<Auto> {
     return this.autosService.create(createDto);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDto: UpdateAutoDto,
+  ): Promise<Auto> {
+    return this.autosService.update(id, updateDto);
   }
 
   @Delete(':id')
