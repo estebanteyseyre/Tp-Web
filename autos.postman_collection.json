@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "TP Tecnologías Web - Autos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar Autos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/autos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos"]
+        }
+      }
+    },
+    {
+      "name": "Filtrar Autos por Piloto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/autos?piloto=",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos"],
+          "query": [
+            {
+              "key": "piloto",
+              "value": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Obtener Auto por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/autos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos", "1"]
+        }
+      }
+    },
+    {
+      "name": "Crear Auto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelo\": \"\",\n  \"marca\": \"\",\n  \"numero\": 0,\n  \"potencia\": 0,\n  \"piloto\": \"\",\n  \"categoria\": \"\",\n  \"competicionId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/autos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos"]
+        }
+      }
+    },
+    {
+      "name": "Editar Auto",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"potencia\": 0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/autos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos", "1"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar Auto",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/autos/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["autos", "1"]
+        }
+      }
+    }
+  ]
+}

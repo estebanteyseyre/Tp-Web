@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "TP Tecnologías Web - Competiciones",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar Competiciones",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/competiciones",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones"]
+        }
+      }
+    },
+    {
+      "name": "Filtrar Competiciones por Nombre",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/competiciones?nombre=",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones"],
+          "query": [
+            {
+              "key": "nombre",
+              "value": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Obtener Competición por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/competiciones/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones", "1"]
+        }
+      }
+    },
+    {
+      "name": "Crear Competición",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"\",\n  \"premio\": \"\",\n  \"fecha\": \"\",\n  \"lugar\": \"\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/competiciones",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones"]
+        }
+      }
+    },
+    {
+      "name": "Editar Competición",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"premio\": \"\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/competiciones/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones", "1"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar Competición",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/competiciones/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["competiciones", "1"]
+        }
+      }
+    }
+  ]
+}
