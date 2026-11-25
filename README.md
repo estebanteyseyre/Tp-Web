@@ -121,11 +121,12 @@ otro entorno alcanza con cambiar esa variable, sin tocar cada request.
 
 ## Deploy
 
-El backend está desplegado en Render: **https://tp-web-backend-w7x0.onrender.com**
+- **Backend (Render):** https://tp-web-backend-w7x0.onrender.com
+- **Frontend (Netlify):** https://tp-web-frontend-srau.netlify.app
 
 Para probar la API contra producción alcanza con cambiar la variable `baseUrl` de las colecciones
-de Postman por esa URL. El plan gratuito duerme el servicio: la primera request puede tardar cerca
-de un minuto en responder.
+de Postman por la URL de Render. El plan gratuito duerme el servicio: la primera request puede tardar
+cerca de un minuto en responder.
 
 ## Notas
 
