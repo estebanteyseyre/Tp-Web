@@ -36,35 +36,33 @@ export class AutosService {
     return auto;
   }
 
-  async create(createDto: CreateAutoDto): Promise<Auto> {
+  async create({ competicionId, ...data }: CreateAutoDto): Promise<Auto> {
     const competicion = await this.competicionesRepository.findOneBy({
-      id: createDto.competicionId,
+      id: competicionId,
     });
     if (!competicion) {
-      throw new BadRequestException(`Competición con ID ${createDto.competicionId} no encontrada`);
+      throw new BadRequestException(`Competición con ID ${competicionId} no encontrada`);
     }
 
-    const auto = this.autosRepository.create({
-      ...createDto,
-      competicion,
-    });
+    const auto = this.autosRepository.create({ ...data, competicion });
     return this.autosRepository.save(auto);
   }
 
   async update(id: number, updateDto: UpdateAutoDto): Promise<Auto> {
     const auto = await this.findOne(id);
+    const { competicionId, ...data } = updateDto;
 
-    if (updateDto.competicionId) {
+    if (competicionId !== undefined) {
       const competicion = await this.competicionesRepository.findOneBy({
-        id: updateDto.competicionId,
+        id: competicionId,
       });
       if (!competicion) {
-        throw new BadRequestException(`Competición con ID ${updateDto.competicionId} no encontrada`);
+        throw new BadRequestException(`Competición con ID ${competicionId} no encontrada`);
       }
       auto.competicion = competicion;
     }
 
-    Object.assign(auto, updateDto);
+    Object.assign(auto, data);
     return this.autosRepository.save(auto);
   }
 
