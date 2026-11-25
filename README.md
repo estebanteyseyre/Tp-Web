@@ -27,7 +27,7 @@ Relación **1 a N**: una `Competición` tiene muchos `Auto`, y cada `Auto` perte
    npm install
    ```
 
-2. Copiar `.env.example` a `.env` y completar los valores reales:
+2. Copiar `.env.example` a `.env`. Los valores por defecto ya funcionan para el Docker local:
 
    ```bash
    cp .env.example .env
