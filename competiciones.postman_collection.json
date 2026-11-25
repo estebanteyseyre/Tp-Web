@@ -10,11 +10,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/competiciones",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones"]
+          "raw": "{{baseUrl}}/competiciones"
         }
       }
     },
@@ -24,11 +20,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/competiciones?nombre=",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones"],
+          "raw": "{{baseUrl}}/competiciones?nombre=",
           "query": [
             {
               "key": "nombre",
@@ -44,11 +36,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/competiciones/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones", "1"]
+          "raw": "{{baseUrl}}/competiciones/1"
         }
       }
     },
@@ -67,11 +55,7 @@
           "raw": "{\n  \"nombre\": \"\",\n  \"premio\": \"\",\n  \"fecha\": \"\",\n  \"lugar\": \"\"\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/competiciones",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones"]
+          "raw": "{{baseUrl}}/competiciones"
         }
       }
     },
@@ -90,11 +74,7 @@
           "raw": "{\n  \"premio\": \"\"\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/competiciones/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones", "1"]
+          "raw": "{{baseUrl}}/competiciones/1"
         }
       }
     },
@@ -104,13 +84,35 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/competiciones/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["competiciones", "1"]
+          "raw": "{{baseUrl}}/competiciones/1"
         }
       }
+    },
+    {
+      "name": "Error: id no numérico (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/competiciones/abc"
+        }
+      }
+    },
+    {
+      "name": "Error: competición inexistente (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/competiciones/999"
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
     }
   ]
 }

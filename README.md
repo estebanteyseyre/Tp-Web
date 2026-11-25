@@ -1,118 +1,128 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# TP Tecnologías Web — Backend: Competición y Autos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST para gestionar competiciones automovilísticas y los autos inscriptos en cada una.
+Relación **1 a N**: una `Competición` tiene muchos `Auto`, y cada `Auto` pertenece a una competición.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Stack
 
-## Description
+- **NestJS** + TypeScript (arquitectura modular: módulos, controladores y servicios).
+- **TypeORM** + **PostgreSQL** como base relacional.
+- **Docker / Docker Compose** para levantar la base.
+- **@nestjs/config** para leer variables de entorno.
+- **class-validator** + `ValidationPipe` para validar los datos de entrada.
+- **Postman** para probar los endpoints.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requisitos
 
-## Project setup
+- Node.js 18+ y npm.
+- Docker con Docker Compose.
 
-```bash
-$ npm install
+## Puesta en marcha
+
+1. Clonar el repositorio e instalar dependencias:
+
+   ```bash
+   git clone https://github.com/estebanteyseyre/Tp-Web.git
+   cd Tp-Web
+   npm install
+   ```
+
+2. Copiar `.env.example` a `.env` y completar los valores reales:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   | Variable       | Uso                                                     |
+   | -------------- | ------------------------------------------------------- |
+   | `DB_HOST`      | Host de PostgreSQL (`localhost` si Docker corre en local) |
+   | `DB_PORT`      | Puerto de PostgreSQL (`5432`)                            |
+   | `DB_USER`      | Usuario de la base de datos                              |
+   | `DB_PASSWORD`  | Contraseña de la base de datos                           |
+   | `DB_NAME`      | Nombre de la base de datos                               |
+
+   El `.env` está en `.gitignore`: **nunca se sube al repositorio**. Docker Compose también lee
+   esas mismas variables para crear el contenedor, así que base y aplicación siempre coinciden.
+
+3. Levantar la base de datos:
+
+   ```bash
+   docker compose up -d
+   ```
+
+   El contenedor `competicion_postgres` usa `postgres:15-alpine` y el volumen `pgdata`, por lo que
+   los datos sobreviven a reinicios. Para borrar todo y empezar de cero: `docker compose down -v`.
+
+4. Levantar la API:
+
+   ```bash
+   npm run start:dev
+   ```
+
+   La API queda escuchando en `http://localhost:3000`.
+
+## Endpoints
+
+| Método | Ruta                       | Descripción                                              |
+| ------ | -------------------------- | -------------------------------------------------------- |
+| GET    | `/competiciones`           | Lista competiciones con sus autos                        |
+| GET    | `/competiciones?nombre=F1` | Filtra por nombre (coincidencia parcial)                  |
+| GET    | `/competiciones/:id`       | Obtiene una competición por id                           |
+| POST   | `/competiciones`           | Crea una competición                                     |
+| PATCH  | `/competiciones/:id`       | Edita algunos campos de una competición                  |
+| DELETE | `/competiciones/:id`       | Borra una competición (y sus autos, por `CASCADE`)       |
+| GET    | `/autos`                   | Lista autos con su competición                           |
+| GET    | `/autos?piloto=Colapinto`  | Filtra autos por piloto (coincidencia parcial)            |
+| GET    | `/autos/:id`               | Obtiene un auto por id                                   |
+| POST   | `/autos`                   | Crea un auto (requiere un `competicionId` existente)     |
+| PATCH  | `/autos/:id`               | Edita algunos campos de un auto                          |
+| DELETE | `/autos/:id`               | Borra un auto                                            |
+
+Ejemplo de `POST /competiciones`:
+
+```json
+{
+  "nombre": "Gran Premio de Mónaco",
+  "premio": "Trofeo Príncipe",
+  "fecha": "2026-05-25",
+  "lugar": "Circuito de Mónaco"
+}
 ```
 
-## Compile and run the project
+Ejemplo de `POST /autos`:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```json
+{
+  "modelo": "F1-75",
+  "marca": "Ferrari",
+  "numero": 16,
+  "potencia": 1000,
+  "piloto": "Leclerc",
+  "categoria": "F1",
+  "competicionId": 1
+}
 ```
 
-## Run tests
+## Validación y errores
 
-```bash
-# unit tests
-$ npm run test
+- Los DTO usan `class-validator` y se validan con un `ValidationPipe` global (`whitelist: true`,
+  `transform: true`). Campos faltantes o con el tipo equivocado devuelven **400 Bad Request**.
+- Los parámetros `:id` pasan por `ParseIntPipe`: si no son numéricos, devuelven **400**.
+- Buscar, editar o borrar un id inexistente devuelve **404 Not Found**.
+- Crear un auto con un `competicionId` inexistente devuelve **400 Bad Request**.
 
-# e2e tests
-$ npm run test:e2e
+## Colecciones de Postman
 
-# test coverage
-$ npm run test:cov
-```
+- `competiciones.postman_collection.json`
+- `autos.postman_collection.json`
 
-## Deployment
+Ambas usan la variable `{{baseUrl}}` (por defecto `http://localhost:3000`): para probar contra
+otro entorno alcanza con cambiar esa variable, sin tocar cada request.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Notas
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Observability
-
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
-
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
-
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
-
-This project is already instrumented. Create a free account at [observe.nestjs.com](https://observe.nestjs.com), add an application, and paste the generated app key and secret into the `ObserveModule.forRoot()` call in `src/app.module.ts`.
-
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `synchronize: true` crea las tablas automáticamente al arrancar. Está bien para el TP; en un
+  proyecto real se usan migraciones.
+- En la entrega 2 el frontend consumirá exclusivamente estos endpoints, y el backend se desplegará
+  en Render (escuchando en `process.env.PORT`).
+- El detalle de las decisiones tomadas está en `resumen.md` y en la carpeta `conversaciones/`.

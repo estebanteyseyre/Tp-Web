@@ -10,11 +10,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/autos",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos"]
+          "raw": "{{baseUrl}}/autos"
         }
       }
     },
@@ -24,11 +20,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/autos?piloto=",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos"],
+          "raw": "{{baseUrl}}/autos?piloto=",
           "query": [
             {
               "key": "piloto",
@@ -44,11 +36,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/autos/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos", "1"]
+          "raw": "{{baseUrl}}/autos/1"
         }
       }
     },
@@ -67,11 +55,7 @@
           "raw": "{\n  \"modelo\": \"\",\n  \"marca\": \"\",\n  \"numero\": 0,\n  \"potencia\": 0,\n  \"piloto\": \"\",\n  \"categoria\": \"\",\n  \"competicionId\": 1\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/autos",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos"]
+          "raw": "{{baseUrl}}/autos"
         }
       }
     },
@@ -90,11 +74,7 @@
           "raw": "{\n  \"potencia\": 0\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/autos/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos", "1"]
+          "raw": "{{baseUrl}}/autos/1"
         }
       }
     },
@@ -104,13 +84,54 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/autos/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["autos", "1"]
+          "raw": "{{baseUrl}}/autos/1"
         }
       }
+    },
+    {
+      "name": "Error: id no numérico (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/autos/abc"
+        }
+      }
+    },
+    {
+      "name": "Error: auto inexistente (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/autos/999"
+        }
+      }
+    },
+    {
+      "name": "Error: competición inexistente (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"modelo\": \"F1-75\",\n  \"marca\": \"Ferrari\",\n  \"numero\": 16,\n  \"potencia\": 1000,\n  \"piloto\": \"Leclerc\",\n  \"categoria\": \"F1\",\n  \"competicionId\": 999\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/autos"
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
     }
   ]
 }
