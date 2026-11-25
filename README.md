@@ -119,10 +119,18 @@ Ejemplo de `POST /autos`:
 Ambas usan la variable `{{baseUrl}}` (por defecto `http://localhost:3000`): para probar contra
 otro entorno alcanza con cambiar esa variable, sin tocar cada request.
 
+## Deploy
+
+El backend está desplegado en Render: **https://tp-web-backend-w7x0.onrender.com**
+
+Para probar la API contra producción alcanza con cambiar la variable `baseUrl` de las colecciones
+de Postman por esa URL. El plan gratuito duerme el servicio: la primera request puede tardar cerca
+de un minuto en responder.
+
 ## Notas
 
 - `synchronize: true` crea las tablas automáticamente al arrancar. Está bien para el TP; en un
   proyecto real se usan migraciones.
-- En la entrega 2 el frontend consumirá exclusivamente estos endpoints, y el backend se desplegará
-  en Render (escuchando en `process.env.PORT`).
+- El frontend consume exclusivamente estos endpoints. El backend escucha en `process.env.PORT`,
+  que Render inyecta automáticamente.
 - El detalle de las decisiones tomadas está en `resumen.md` y en la carpeta `conversaciones/`.
